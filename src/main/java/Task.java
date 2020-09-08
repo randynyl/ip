@@ -16,6 +16,9 @@ public class Task {
     }
 
     public void markAsDone() {
+        if (isDone == true) {
+            System.out.println("This task has already been completed!");
+        }
         isDone = true;
     }
 
