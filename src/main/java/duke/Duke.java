@@ -4,15 +4,46 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
 
 public class Duke {
+    protected static ArrayList<Task> tasks = new ArrayList<Task>();
+    private static String dataPath = "data/duke.txt";
     public static void main(String[] args) {
-        ArrayList<Task> tasks = new ArrayList<Task>();
         printGreetings();
+        getTasksFromFile();
         executeCommand(tasks);
+        writeToFile();
         printGoodbye();
+    }
+
+    private static void writeToFile() {
+        StringBuilder textToWrite = new StringBuilder();
+        for (Task task : tasks) {
+            textToWrite.append(task.getTag()).append(" | ").append(task.getStatusBinary()).append(" | ").append(task.getTaskName());
+            if (task instanceof Event || task instanceof Deadline) {
+                textToWrite.append(" | ").append(task.getDetails());
+            }
+            textToWrite.append(System.lineSeparator());
+        }
+        try {
+            IOManager.writeToFile(dataPath, textToWrite.toString());
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
+
+    private static void getTasksFromFile() {
+        try {
+            IOManager.readFileContents(dataPath);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found! Creating new file.");
+        }
     }
 
     private static void executeCommand(ArrayList<Task> tasks) {
@@ -151,7 +182,7 @@ public class Duke {
         printLineBorder();
     }
 
-    private static void addTask(ArrayList<Task> tasks, Task task) {
+    protected static void addTask(ArrayList<Task> tasks, Task task) {
         tasks.add(task);
         printAddedTaskMessage(task);
         printTaskCountMessage(tasks);
