@@ -1,0 +1,3 @@
+[T] | 0 | bob
+[D] | 0 | this | yesterday
+[E] | 1 | tut | tmr

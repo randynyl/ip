@@ -5,18 +5,25 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.File;
 
 public class Duke {
     protected static ArrayList<Task> tasks = new ArrayList<Task>();
-    private static String dataPath = "data/duke.txt";
+    private static final String FILE_PATH = "data/duke.txt";
     public static void main(String[] args) {
         printGreetings();
-        getTasksFromFile();
+        try {
+            getTasksFromFile();
+        } catch (IOException e) {
+            System.out.print("Something went wrong: \" + e.getMessage()");
+        }
         executeCommand(tasks);
         writeToFile();
         printGoodbye();
@@ -32,17 +39,19 @@ public class Duke {
             textToWrite.append(System.lineSeparator());
         }
         try {
-            IOManager.writeToFile(dataPath, textToWrite.toString());
+            IOManager.writeToFile(FILE_PATH, textToWrite.toString());
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }
     }
 
-    private static void getTasksFromFile() {
+    private static void getTasksFromFile() throws IOException {
         try {
-            IOManager.readFileContents(dataPath);
+            IOManager.readFileContents(FILE_PATH);
+            System.out.println("File found!");
         } catch (FileNotFoundException e) {
-            System.out.println("File not found! Creating new file.");
+            File f = new File(FILE_PATH);
+            f.createNewFile();
         }
     }
 
