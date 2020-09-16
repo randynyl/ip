@@ -1,6 +1,6 @@
 package duke.task;
 
-public class Task {
+public abstract class Task {
     private String taskName;
     private boolean isDone;
 
@@ -28,9 +28,17 @@ public class Task {
         return (isDone ? "\u2713" : "\u2718");
     }
 
+    public String getStatusBinary() {
+        return (isDone ? "1" : "0");
+    }
+
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + getTaskName();
+    }
+    public abstract String getTag();
+    public String getDetails() {
+        return null;
     }
 }
 
