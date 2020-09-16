@@ -18,7 +18,7 @@ public class Duke {
     private static void executeCommand(ArrayList<Task> tasks) {
         Scanner in = new Scanner(System.in);
         String userInput = in.nextLine();
-        String userCommand = userInput.split(" ")[0];
+        String userCommand = userInput.split(" ")[0].toLowerCase();
         while (!"bye".equals(userCommand)) {
             printLineBorder();
             switch (userCommand) {
@@ -56,6 +56,13 @@ public class Duke {
                     System.out.println("\t> Sire, please ensure you have the event name and time separated with '/at'");
                 }
                 break;
+            case "delete":
+                try {
+                    deleteTask(tasks, userInput);
+                } catch (Exception e) {
+                    System.out.println("\t> Please enter an existing task number to delete!");
+                }
+                break;
             default:
                 printRetryMessage();
             }
@@ -63,6 +70,24 @@ public class Duke {
             userInput = in.nextLine();
             userCommand = userInput.split(" ")[0];
         }
+    }
+
+    private static void deleteTask(ArrayList<Task> tasks, String userInput)
+            throws DukeException, NumberFormatException {
+        int taskNumber = Integer.parseInt(userInput.split(" ")[1]);
+        if (taskNumber > tasks.size()) {
+            throw new DukeException();
+        }
+        Task taskToRemove = tasks.get(taskNumber-1);
+        tasks.remove(taskNumber-1);
+        printDeleteTaskMessage(taskToRemove);
+        printTaskCountMessage(tasks);
+
+    }
+
+    private static void printDeleteTaskMessage(Task task) {
+        System.out.println("\t> Very Well. Your task has been removed:");
+        System.out.println("\t\t" + task.toString());
     }
 
     private static void printRetryMessage() {
