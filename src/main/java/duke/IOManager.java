@@ -91,8 +91,6 @@ public class IOManager {
             tasks.addAll(readFileContents(filePath));
         } catch (FileNotFoundException e) {
             File f = new File(filePath);
-//            File folder = new File("data");
-//            folder.mkdir();
             f.createNewFile();
         }
         return tasks;
