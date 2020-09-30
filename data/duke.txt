@@ -1,2 +1,4 @@
 [T] | 1 | me
 [E] | 1 | you | hehe
+[T] | 0 | bob 
+[D] | 0 | boboga | 2413-11-07

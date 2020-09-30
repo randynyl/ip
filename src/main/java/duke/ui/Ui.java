@@ -16,6 +16,9 @@ import static duke.ui.Messages.MESSAGE_INVALID_EVENT;
 import static duke.ui.Messages.MESSAGE_INVALID_DELETE;
 import static duke.ui.Messages.MESSAGE_LIST_TASKS;
 import static duke.ui.Messages.MESSAGE_LIST_TASKS_NONE;
+import static duke.ui.Messages.MESSAGE_FOUND_TASKS_NONE;
+import static duke.ui.Messages.MESSAGE_FOUND_TASKS;
+import static duke.ui.Messages.MESSAGE_INVALID_FIND;
 
 public class Ui {
 
@@ -108,6 +111,23 @@ public class Ui {
             }
         }
     }
+
+    public static void printFoundTasksMessage(ArrayList<Task> tasksFound) {
+        if (tasksFound.size() == 0) {
+            System.out.println(TAB_SPACE + MESSAGE_FOUND_TASKS_NONE);
+        } else {
+            System.out.println(TAB_SPACE + MESSAGE_FOUND_TASKS);
+            for (int i = 0; i < tasksFound.size(); i++) {
+                System.out.println(TAB_SPACE + (i + 1) + "." + tasksFound.get(i).toString());
+            }
+        }
+    }
+
+    public static void printInvalidFindMessage() {
+        System.out.println(TAB_SPACE + MESSAGE_INVALID_FIND);
+    }
+
+
 
 
 }
