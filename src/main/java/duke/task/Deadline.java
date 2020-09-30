@@ -1,28 +1,30 @@
 package duke.task;
 
-import duke.task.Task;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Deadline extends Task {
-    private String deadlineTime;
-    private static String deadlineTag  = "[D]";
+    private LocalDate deadlineTime;
+    private static final String DEADLINE_TAG = "[D]";
 
-    public Deadline(String taskName, String deadlineTime) {
+    public Deadline(String taskName, String deadlineTime) throws DateTimeParseException {
         super(taskName);
-        this.deadlineTime = deadlineTime;
+        this.deadlineTime = LocalDate.parse(deadlineTime);
     }
 
     @Override
     public String toString() {
-        String deadlineDetails = " (by: " + deadlineTime + ")";
-        return deadlineTag + super.toString() + deadlineDetails;
+        String deadlineDetails = " (by: " + getDetails() + ")";
+        return DEADLINE_TAG + super.toString() + deadlineDetails;
     }
 
     @Override
     public String getTag() {
-        return deadlineTag;
+        return DEADLINE_TAG;
     }
 
     public String getDetails() {
-        return deadlineTime;
+        return deadlineTime.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 }

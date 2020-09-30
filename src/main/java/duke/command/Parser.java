@@ -6,6 +6,7 @@ import duke.task.TaskList;
 import duke.task.Todo;
 import duke.ui.Ui;
 
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Parser {
@@ -66,6 +67,8 @@ public class Parser {
             tasks.addTask(newDeadline);
         } catch (IndexOutOfBoundsException e) {
             Ui.printInvalidDeadlineMessage();
+        } catch (DateTimeParseException e) {
+            Ui.printInvalidTimeMessage();
         }
     }
 
