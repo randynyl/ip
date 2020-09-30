@@ -22,5 +22,7 @@ public class Messages {
     public static final String MESSAGE_INVALID_DELETE = "> Please enter an existing task number to delete!";
     public static final String MESSAGE_LIST_TASKS = "> Here are your tasks, sire: ";
     public static final String MESSAGE_LIST_TASKS_NONE = "> You currently have no tasks, sire!";
-
+    public static final String MESSAGE_FOUND_TASKS_NONE = "> No tasks found milord!";
+    public static final String MESSAGE_FOUND_TASKS = "> Here are the matching tasks in your wondrous list:";
+    public static final String MESSAGE_INVALID_FIND = "> Please enter a string to match your tasks with!";
 }

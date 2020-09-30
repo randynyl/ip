@@ -1,11 +1,8 @@
 package duke.command;
 
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.TaskList;
-import duke.task.Todo;
+import duke.task.*;
 import duke.ui.Ui;
-
+import java.util.ArrayList;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
@@ -35,6 +32,9 @@ public class Parser {
             case "delete":
                 executeDelete(tasks, userInput);
                 break;
+            case "find":
+                executeFind(tasks, userInput);
+                break;
             default:
                 Ui.printRetryMessage();
             }
@@ -44,6 +44,15 @@ public class Parser {
         }
     }
 
+    private static void executeFind(TaskList tasks, String userInput) {
+        try {
+            String stringToMatch = userInput.split(" ")[1];
+            ArrayList<Task> tasksFound = tasks.findTasks(stringToMatch);
+            Ui.printFoundTasksMessage(tasksFound);
+        } catch (IndexOutOfBoundsException e) {
+            Ui.printInvalidFindMessage();
+        }
+    }
     private static void executeDelete(TaskList tasks, String userInput) {
         try {
             tasks.deleteTask(userInput);

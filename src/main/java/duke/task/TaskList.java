@@ -3,6 +3,7 @@ package duke.task;
 import duke.command.DukeException;
 import duke.ui.Ui;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -54,5 +55,17 @@ public class TaskList {
         tasks.add(task);
         Ui.printAddedTaskMessage(task);
         Ui.printTaskCountMessage(tasks);
+    }
+
+    public ArrayList<Task> findTasks(String stringToMatch) {
+        ArrayList<Task> tasksFound = new ArrayList<>();
+        for (Task task : getTasks()) {
+            System.out.println(task.getTaskName().toLowerCase());
+            System.out.println(stringToMatch.toLowerCase());
+            if (task.getTaskName().toLowerCase().contains(stringToMatch.toLowerCase())) {
+                tasksFound.add(task);
+            }
+        }
+        return tasksFound;
     }
 }
