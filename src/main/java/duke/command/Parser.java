@@ -6,7 +6,15 @@ import java.util.ArrayList;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+/**
+ * Handles respective user inputs and commands
+ */
 public class Parser {
+    /**
+     * Receives user's input and carries out the necessary command
+     * Loops back if invalid command is entered for user to try again
+     * @param tasks
+     */
     public static void executeCommand(TaskList tasks) {
         Scanner in = new Scanner(System.in);
         String userInput = in.nextLine();
