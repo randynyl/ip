@@ -1,10 +1,8 @@
 package duke.task;
 
-import duke.task.Task;
-
 public class Event extends Task {
     private String details;
-    private static String eventTag = "[E]";
+    private static final String EVENT_TAG = "[E]";
 
     public Event(String taskName, String details) {
         super(taskName);
@@ -14,12 +12,12 @@ public class Event extends Task {
     @Override
     public String toString() {
         String eventDetails = " (at: " + details + ")";
-        return eventTag + super.toString() + eventDetails;
+        return EVENT_TAG + super.toString() + eventDetails;
     }
 
     @Override
     public String getTag() {
-        return eventTag;
+        return EVENT_TAG;
     }
 
     public String getDetails() {

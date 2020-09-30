@@ -1,9 +1,7 @@
 package duke.task;
 
-import duke.task.Task;
-
 public class Todo extends Task {
-    private static String todoTag = "[T]";
+    private static final String TODO_TAG = "[T]";
 
     public Todo(String taskName) {
         super(taskName);
@@ -11,11 +9,11 @@ public class Todo extends Task {
 
     @Override
     public String toString() {
-        return todoTag + super.toString();
+        return TODO_TAG + super.toString();
     }
 
     @Override
     public String getTag() {
-        return todoTag;
+        return TODO_TAG;
     }
 }
