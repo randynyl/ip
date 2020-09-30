@@ -18,4 +18,7 @@ public class Messages {
     public static final String MESSAGE_INVALID_EVENT =
             "> Sire, please ensure you have the event name and time separated with '/at'";
     public static final String MESSAGE_INVALID_DELETE = "> Please enter an existing task number to delete!";
+    public static final String MESSAGE_LIST_TASKS = "> Here are your tasks, sire: ";
+    public static final String MESSAGE_LIST_TASKS_NONE = "> You currently have no tasks, sire!";
+
 }

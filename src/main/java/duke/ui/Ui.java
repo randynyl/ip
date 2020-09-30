@@ -14,6 +14,8 @@ import static duke.ui.Messages.MESSAGE_INVALID_TODO;
 import static duke.ui.Messages.MESSAGE_INVALID_DEADLINE;
 import static duke.ui.Messages.MESSAGE_INVALID_EVENT;
 import static duke.ui.Messages.MESSAGE_INVALID_DELETE;
+import static duke.ui.Messages.MESSAGE_LIST_TASKS;
+import static duke.ui.Messages.MESSAGE_LIST_TASKS_NONE;
 
 public class Ui {
 
@@ -82,6 +84,22 @@ public class Ui {
 
     public static void printFileErrorMessage(Exception e) {
         System.out.print("Something went wrong: " + e.getMessage());
+    }
+
+    public static void printTaskDoneMessage(Task task) {
+        System.out.println(TAB_SPACE + "> Excellent. This task shall be marked as done: "
+                + System.lineSeparator() + TAB_SPACE + "  " + task.toString());
+    }
+
+    public static void printListTasksMessage(ArrayList<Task> tasks) {
+        if (tasks.size() == 0) {
+            System.out.println(TAB_SPACE + MESSAGE_LIST_TASKS_NONE);
+        } else {
+            System.out.println(TAB_SPACE + MESSAGE_LIST_TASKS);
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println("\t" + (i + 1) + "." + tasks.get(i).toString());
+            }
+        }
     }
 
 

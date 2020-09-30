@@ -6,10 +6,12 @@ import duke.ui.Ui;
 import java.util.ArrayList;
 
 public class TaskList {
-    private ArrayList<Task> tasks;
+    private ArrayList<Task> tasks = new ArrayList<>();
 
     public TaskList(ArrayList<Task> tasks) {
-        this.tasks.addAll(tasks);
+        for (Task task : tasks) {
+            this.tasks.add(task);
+        }
     }
 
     public ArrayList<Task> getTasks() {
@@ -37,15 +39,11 @@ public class TaskList {
             throw new DukeException();
         }
         tasks.get(taskNumber-1).markAsDone();
-        System.out.println("\t> Excellent. This task shall be marked as done: \n\t  "
-                + tasks.get(taskNumber - 1).toString());
+        Ui.printTaskDoneMessage(tasks.get(taskNumber - 1));
     }
 
     public void listTasks() {
-        System.out.println("\t> Here are your tasks, sire: ");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("\t" + (i+1) + "." + tasks.get(i).toString());
-        }
+        Ui.printListTasksMessage(tasks);
     }
 
     public void addTask(Task task) {
