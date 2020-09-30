@@ -12,6 +12,7 @@ import static duke.ui.Messages.MESSAGE_TASK_ADDED;
 import static duke.ui.Messages.MESSAGE_INVALID_DONE;
 import static duke.ui.Messages.MESSAGE_INVALID_TODO;
 import static duke.ui.Messages.MESSAGE_INVALID_DEADLINE;
+import static duke.ui.Messages.MESSAGE_INVALID_DEADLINE_TIME;
 import static duke.ui.Messages.MESSAGE_INVALID_EVENT;
 import static duke.ui.Messages.MESSAGE_INVALID_DELETE;
 import static duke.ui.Messages.MESSAGE_LIST_TASKS;
@@ -75,6 +76,10 @@ public class Ui {
 
     public static void printInvalidDeadlineMessage() {
         System.out.println(TAB_SPACE + MESSAGE_INVALID_DEADLINE);
+    }
+
+    public static void printInvalidTimeMessage() {
+        System.out.println(TAB_SPACE + MESSAGE_INVALID_DEADLINE_TIME);
     }
 
     public static void printInvalidEventMessage() {
