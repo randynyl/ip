@@ -9,11 +9,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class IOManager {
 
-    public static void readFileContents(String filePath) throws FileNotFoundException {
+    private static final String FILE_PATH = "data/duke.txt";
+
+    public static ArrayList<Task> readFileContents(String filePath) throws FileNotFoundException {
+        ArrayList<Task> tasks = new ArrayList<>();
         File f = new File(filePath);
         Scanner s = new Scanner(f);
         while (s.hasNext()) {
@@ -40,18 +44,36 @@ public class IOManager {
             if ("1".equals(taskComplete)) {
                 nextTask.markAsDone();
             }
-            Duke.tasks.add(nextTask);
+            tasks.add(nextTask);
         }
+        return tasks;
     }
 
-    public static void writeToFile(String filePath, String textToAppend) throws IOException {
+
+    public static void writeToFile(String filePath) throws IOException {
+        StringBuilder textToWrite = new StringBuilder();
+        for (Task task : Duke.tasks.getTasks()) {
+            textToWrite.append(task.getTag()).append(" | ").append(task.getStatusBinary()).append(" | ").append(task.getTaskName());
+            if (task instanceof Event || task instanceof Deadline) {
+                textToWrite.append(" | ").append(task.getDetails());
+            }
+            textToWrite.append(System.lineSeparator());
+        }
         FileWriter fw = new FileWriter(filePath);
-        fw.write(textToAppend);
+        fw.write(String.valueOf(textToWrite));
         fw.close();
     }
 
-
-
-
-
+    static ArrayList<Task> getTasksFromFile(String filePath) throws IOException {
+        ArrayList<Task> tasks = new ArrayList<>();
+        try {
+            tasks.addAll(readFileContents(filePath));
+        } catch (FileNotFoundException e) {
+            File f = new File(filePath);
+//            File folder = new File("data");
+//            folder.mkdir();
+            f.createNewFile();
+        }
+        return tasks;
+    }
 }

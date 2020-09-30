@@ -1,73 +1,43 @@
 package duke;
-import duke.command.DukeException;
-import duke.task.Deadline;
-import duke.task.Event;
-import duke.task.Task;
-import duke.task.Todo;
+import duke.task.*;
+import duke.ui.Ui;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
-    protected static ArrayList<Task> tasks = new ArrayList<Task>();
+    protected static TaskList tasks;
     private static final String FILE_PATH = "data/duke.txt";
     public static void main(String[] args) {
-        printGreetings();
+        Ui.printGreetings();
         try {
-            getTasksFromFile();
+            tasks = new TaskList(IOManager.getTasksFromFile(FILE_PATH));
         } catch (IOException e) {
-            System.out.print("Something went wrong: \" + e.getMessage()");
+            System.out.print("Something went wrong: " + e.getMessage());
         }
         executeCommand(tasks);
-        writeToFile();
-        printGoodbye();
-    }
-
-    private static void writeToFile() {
-        StringBuilder textToWrite = new StringBuilder();
-        for (Task task : tasks) {
-            textToWrite.append(task.getTag()).append(" | ").append(task.getStatusBinary()).append(" | ").append(task.getTaskName());
-            if (task instanceof Event || task instanceof Deadline) {
-                textToWrite.append(" | ").append(task.getDetails());
-            }
-            textToWrite.append(System.lineSeparator());
-        }
         try {
-            IOManager.writeToFile(FILE_PATH, textToWrite.toString());
+            IOManager.writeToFile(FILE_PATH);
         } catch (IOException e) {
-            System.out.println("Something went wrong: " + e.getMessage());
+            System.out.print("Something went wrong: " + e.getMessage());
         }
+        Ui.printGoodbye();
     }
 
-    private static void getTasksFromFile() throws IOException {
-        try {
-            IOManager.readFileContents(FILE_PATH);
-            System.out.println("File found!");
-        } catch (FileNotFoundException e) {
-            File f = new File(FILE_PATH);
-            f.createNewFile();
-        }
-    }
-
-    private static void executeCommand(ArrayList<Task> tasks) {
+    private static void executeCommand(TaskList tasks) {
         Scanner in = new Scanner(System.in);
         String userInput = in.nextLine();
         String userCommand = userInput.split(" ")[0].toLowerCase();
         while (!"bye".equals(userCommand)) {
-            printLineBorder();
+            Ui.printLineBorder();
             switch (userCommand) {
             case "list":
-                listTasks(tasks);
+                tasks.listTasks();
                 break;
             case "done":
                 try {
-                    resolveTask(tasks, userInput);
+                    tasks.resolveTask(userInput);
                 } catch (Exception e) {
                     System.out.println("\t> Please enter an existing task number to complete!");
                 }
@@ -75,7 +45,7 @@ public class Duke {
             case "todo":
                 try {
                     Todo newTodo = getTodoFromInput(userInput);
-                    addTask(tasks, newTodo);
+                    tasks.addTask(newTodo);
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("\t> Pardon me my lord but the description of a todo mustn't be empty!");
                 }
@@ -83,7 +53,7 @@ public class Duke {
             case "deadline":
                 try {
                     Deadline newDeadline = getDeadlineFromInput(userInput);
-                    addTask(tasks, newDeadline);
+                    tasks.addTask(newDeadline);
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("\t> Sire, please ensure you have the deadline name and time separated with '/by'");
                 }
@@ -91,51 +61,25 @@ public class Duke {
             case "event":
                 try {
                     Event newEvent = getEventFromInput(userInput);
-                    addTask(tasks, newEvent);
+                    tasks.addTask(newEvent);
                 } catch (IndexOutOfBoundsException e) {
                     System.out.println("\t> Sire, please ensure you have the event name and time separated with '/at'");
                 }
                 break;
             case "delete":
                 try {
-                    deleteTask(tasks, userInput);
+                    tasks.deleteTask(userInput);
                 } catch (Exception e) {
                     System.out.println("\t> Please enter an existing task number to delete!");
                 }
                 break;
             default:
-                printRetryMessage();
+                Ui.printRetryMessage();
             }
-            printLineBorder();
+            Ui.printLineBorder();
             userInput = in.nextLine();
             userCommand = userInput.split(" ")[0];
         }
-    }
-
-    private static void deleteTask(ArrayList<Task> tasks, String userInput)
-            throws DukeException, NumberFormatException {
-        int taskNumber = Integer.parseInt(userInput.split(" ")[1]);
-        if (taskNumber > tasks.size()) {
-            throw new DukeException();
-        }
-        Task taskToRemove = tasks.get(taskNumber-1);
-        tasks.remove(taskNumber-1);
-        printDeleteTaskMessage(taskToRemove);
-        printTaskCountMessage(tasks);
-
-    }
-
-    private static void printDeleteTaskMessage(Task task) {
-        System.out.println("\t> Very Well. Your task has been removed:");
-        System.out.println("\t\t" + task.toString());
-    }
-
-    private static void printRetryMessage() {
-        System.out.println("\t> Ohhh my sire please give me a valid command");
-    }
-
-    private static void printLineBorder() {
-        System.out.println("\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
     private static Event getEventFromInput(String userInput) throws IndexOutOfBoundsException {
@@ -160,50 +104,4 @@ public class Duke {
         return newTodo;
     }
 
-    private static void resolveTask(ArrayList<Task> tasks, String userInput)
-            throws DukeException, NumberFormatException {
-        int taskNumber = Integer.parseInt(userInput.split(" ")[1]);
-        if (taskNumber > tasks.size()) {
-            throw new DukeException();
-        }
-        tasks.get(taskNumber-1).markAsDone();
-        System.out.println("\t> Excellent. This task shall be marked as done: \n\t  "
-                + tasks.get(taskNumber - 1).toString());
-    }
-
-    private static void listTasks(ArrayList<Task> tasks) {
-        System.out.println("\t> Here are your tasks, sire: ");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("\t" + (i+1) + "." + tasks.get(i).toString());
-        }
-    }
-
-    private static void printGoodbye() {
-        printLineBorder();
-        System.out.println("\t> Goodbye, sire. Fare thee well.");
-        printLineBorder();
-    }
-
-    private static void printGreetings() {
-        printLineBorder();
-        System.out.println("\t> Good day, sire, Percival at your disposal.");
-        System.out.println("\t> How may I be of service?");
-        printLineBorder();
-    }
-
-    protected static void addTask(ArrayList<Task> tasks, Task task) {
-        tasks.add(task);
-        printAddedTaskMessage(task);
-        printTaskCountMessage(tasks);
-    }
-
-    private static void printTaskCountMessage(ArrayList<Task> tasks) {
-        String plural = (tasks.size() == 1) ? "" : "s";
-        System.out.printf("\t> Now you have " + tasks.size() + " task%s in the list.%n", plural);
-    }
-
-    private static void printAddedTaskMessage(Task task) {
-        System.out.println("\t> Very well. This task has been added: ");
-        System.out.println("\t\t" + task.toString());
-    }
 }
