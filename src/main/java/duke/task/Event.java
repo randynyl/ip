@@ -6,7 +6,7 @@ package duke.task;
  */
 public class Event extends Task {
     private String details;
-    private static String eventTag = "[E]";
+    private static final String EVENT_TAG = "[E]";
 
     /**
      * Constructor for the Event Class
@@ -25,7 +25,7 @@ public class Event extends Task {
     @Override
     public String toString() {
         String eventDetails = " (at: " + details + ")";
-        return eventTag + super.toString() + eventDetails;
+        return EVENT_TAG + super.toString() + eventDetails;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Event extends Task {
      */
     @Override
     public String getTag() {
-        return eventTag;
+        return EVENT_TAG;
     }
 
     /**

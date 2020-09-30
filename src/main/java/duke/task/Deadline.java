@@ -1,20 +1,24 @@
 package duke.task;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Represents a task with both a description and a finish-by time
  */
 public class Deadline extends Task {
-    private String deadlineTime;
-    private static String deadlineTag  = "[D]";
+
+    private LocalDate deadlineTime;
+    private static final String DEADLINE_TAG = "[D]";
 
     /**
      * Constructor for the Deadline Class
      * @param taskName description of task.
      * @param deadlineTime time to finish task by
      */
-    public Deadline(String taskName, String deadlineTime) {
+    public Deadline(String taskName, String deadlineTime) throws DateTimeParseException {
         super(taskName);
-        this.deadlineTime = deadlineTime;
+        this.deadlineTime = LocalDate.parse(deadlineTime);
     }
 
     /**
@@ -23,8 +27,8 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        String deadlineDetails = " (by: " + deadlineTime + ")";
-        return deadlineTag + super.toString() + deadlineDetails;
+        String deadlineDetails = " (by: " + getDetails() + ")";
+        return DEADLINE_TAG + super.toString() + deadlineDetails;
     }
 
     /**
@@ -33,7 +37,7 @@ public class Deadline extends Task {
      */
     @Override
     public String getTag() {
-        return deadlineTag;
+        return DEADLINE_TAG;
     }
 
     /**
@@ -41,6 +45,6 @@ public class Deadline extends Task {
      * @return the finish-by time.
      */
     public String getDetails() {
-        return deadlineTime;
+        return deadlineTime.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 }

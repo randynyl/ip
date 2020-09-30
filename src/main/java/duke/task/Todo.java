@@ -5,7 +5,7 @@ package duke.task;
  * and no additional details
  */
 public class Todo extends Task {
-    private static String todoTag = "[T]";
+    private static final String TODO_TAG = "[T]";
 
     /**
      * Constructor of the To-do class.
@@ -21,7 +21,7 @@ public class Todo extends Task {
      */
     @Override
     public String toString() {
-        return todoTag + super.toString();
+        return TODO_TAG + super.toString();
     }
 
     /**
@@ -30,6 +30,6 @@ public class Todo extends Task {
      */
     @Override
     public String getTag() {
-        return todoTag;
+        return TODO_TAG;
     }
 }

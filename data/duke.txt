@@ -1,2 +1,8 @@
 [T] | 1 | me
+<<<<<<< HEAD
 [E] | 1 | you | hehe
+[T] | 0 | bob 
+[D] | 0 | boboga | 2413-11-07
+=======
+[D] | 1 | you | Dec 1 2011
+>>>>>>> master
