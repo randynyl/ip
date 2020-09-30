@@ -10,4 +10,12 @@ public class Messages {
     public static final String MESSAGE_WELCOME = TAB_SPACE + "> Good day, sire, Percival at your disposal."
             + System.lineSeparator() + TAB_SPACE + "> How may I be of service?";
     public static final String MESSAGE_TASK_ADDED = "> Very well. This task has been added: ";
+    public static final String MESSAGE_INVALID_DONE = "> Please enter an existing task number to complete!";
+    public static final String MESSAGE_INVALID_TODO =
+            "> Pardon me my lord but the description of a todo mustn't be empty!";
+    public static final String MESSAGE_INVALID_DEADLINE =
+            "> Sire, please ensure you have the deadline name and time separated with '/by'";
+    public static final String MESSAGE_INVALID_EVENT =
+            "> Sire, please ensure you have the event name and time separated with '/at'";
+    public static final String MESSAGE_INVALID_DELETE = "> Please enter an existing task number to delete!";
 }

@@ -9,6 +9,11 @@ import static duke.ui.Messages.MESSAGE_TASK_DELETED;
 import static duke.ui.Messages.MESSAGE_GOODBYE;
 import static duke.ui.Messages.MESSAGE_WELCOME;
 import static duke.ui.Messages.MESSAGE_TASK_ADDED;
+import static duke.ui.Messages.MESSAGE_INVALID_DONE;
+import static duke.ui.Messages.MESSAGE_INVALID_TODO;
+import static duke.ui.Messages.MESSAGE_INVALID_DEADLINE;
+import static duke.ui.Messages.MESSAGE_INVALID_EVENT;
+import static duke.ui.Messages.MESSAGE_INVALID_DELETE;
 
 public class Ui {
 
@@ -54,4 +59,30 @@ public class Ui {
         System.out.println(TAB_SPACE + MESSAGE_TASK_ADDED);
         System.out.println(TAB_SPACE + TAB_SPACE + task.toString());
     }
+
+    public static void printInvalidDoneMessage() {
+        System.out.println(TAB_SPACE + MESSAGE_INVALID_DONE);
+    }
+
+    public static void printInvalidTodoMessage() {
+        System.out.println(TAB_SPACE + MESSAGE_INVALID_TODO);
+    }
+
+    public static void printInvalidDeadlineMessage() {
+        System.out.println(TAB_SPACE + MESSAGE_INVALID_DEADLINE);
+    }
+
+    public static void printInvalidEventMessage() {
+        System.out.println(TAB_SPACE + MESSAGE_INVALID_EVENT);
+    }
+
+    public static void printInvalidDeleteMessage() {
+        System.out.println(TAB_SPACE + MESSAGE_INVALID_DELETE);
+    }
+
+    public static void printFileErrorMessage(Exception e) {
+        System.out.print("Something went wrong: " + e.getMessage());
+    }
+
+
 }

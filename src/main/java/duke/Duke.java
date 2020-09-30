@@ -14,13 +14,13 @@ public class Duke {
         try {
             tasks = new TaskList(IOManager.getTasksFromFile(FILE_PATH));
         } catch (IOException e) {
-            System.out.print("Something went wrong: " + e.getMessage());
+            Ui.printFileErrorMessage(e);
         }
         executeCommand(tasks);
         try {
             IOManager.writeToFile(FILE_PATH);
         } catch (IOException e) {
-            System.out.print("Something went wrong: " + e.getMessage());
+            Ui.printFileErrorMessage(e);
         }
         Ui.printGoodbye();
     }
@@ -39,7 +39,7 @@ public class Duke {
                 try {
                     tasks.resolveTask(userInput);
                 } catch (Exception e) {
-                    System.out.println("\t> Please enter an existing task number to complete!");
+                    Ui.printInvalidDoneMessage();
                 }
                 break;
             case "todo":
@@ -47,7 +47,7 @@ public class Duke {
                     Todo newTodo = getTodoFromInput(userInput);
                     tasks.addTask(newTodo);
                 } catch (IndexOutOfBoundsException e) {
-                    System.out.println("\t> Pardon me my lord but the description of a todo mustn't be empty!");
+                    Ui.printInvalidTodoMessage();
                 }
                 break;
             case "deadline":
@@ -55,7 +55,7 @@ public class Duke {
                     Deadline newDeadline = getDeadlineFromInput(userInput);
                     tasks.addTask(newDeadline);
                 } catch (IndexOutOfBoundsException e) {
-                    System.out.println("\t> Sire, please ensure you have the deadline name and time separated with '/by'");
+                    Ui.printInvalidDeadlineMessage();
                 }
                 break;
             case "event":
@@ -63,14 +63,14 @@ public class Duke {
                     Event newEvent = getEventFromInput(userInput);
                     tasks.addTask(newEvent);
                 } catch (IndexOutOfBoundsException e) {
-                    System.out.println("\t> Sire, please ensure you have the event name and time separated with '/at'");
+                    Ui.printInvalidEventMessage();
                 }
                 break;
             case "delete":
                 try {
                     tasks.deleteTask(userInput);
                 } catch (Exception e) {
-                    System.out.println("\t> Please enter an existing task number to delete!");
+                    Ui.printInvalidDeleteMessage();
                 }
                 break;
             default:
