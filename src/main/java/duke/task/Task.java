@@ -18,10 +18,11 @@ public abstract class Task {
     }
 
     public void markAsDone() {
-        if (isDone == true) {
-            System.out.println("This task has already been completed!");
-        }
         isDone = true;
+    }
+
+    public boolean isDone() {
+        return isDone;
     }
 
     public String getStatusIcon() {

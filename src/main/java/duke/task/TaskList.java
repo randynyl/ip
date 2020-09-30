@@ -14,6 +14,9 @@ public class TaskList {
         }
     }
 
+    public TaskList() {
+    }
+
     public ArrayList<Task> getTasks() {
         return tasks;
     }
@@ -38,8 +41,9 @@ public class TaskList {
         if (taskNumber > tasks.size()) {
             throw new DukeException();
         }
-        tasks.get(taskNumber-1).markAsDone();
         Ui.printTaskDoneMessage(tasks.get(taskNumber - 1));
+        tasks.get(taskNumber-1).markAsDone();
+        Ui.printTaskDetails(tasks.get(taskNumber - 1));
     }
 
     public void listTasks() {

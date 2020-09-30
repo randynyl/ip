@@ -83,12 +83,19 @@ public class Ui {
     }
 
     public static void printFileErrorMessage(Exception e) {
-        System.out.print("Something went wrong: " + e.getMessage());
+        System.out.print("Could not find saved file.");
     }
 
     public static void printTaskDoneMessage(Task task) {
-        System.out.println(TAB_SPACE + "> Excellent. This task shall be marked as done: "
-                + System.lineSeparator() + TAB_SPACE + "  " + task.toString());
+        if (task.isDone()) {
+            System.out.println(TAB_SPACE + "> This task has already been completed!");
+        } else {
+            System.out.println(TAB_SPACE + "> Excellent. This task shall be marked as done: ");
+        }
+    }
+
+    public static void printTaskDetails(Task task) {
+        System.out.println(TAB_SPACE + "  " + task.toString());
     }
 
     public static void printListTasksMessage(ArrayList<Task> tasks) {
@@ -97,7 +104,7 @@ public class Ui {
         } else {
             System.out.println(TAB_SPACE + MESSAGE_LIST_TASKS);
             for (int i = 0; i < tasks.size(); i++) {
-                System.out.println("\t" + (i + 1) + "." + tasks.get(i).toString());
+                System.out.println(TAB_SPACE + (i + 1) + "." + tasks.get(i).toString());
             }
         }
     }
