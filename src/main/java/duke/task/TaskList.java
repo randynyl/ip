@@ -94,8 +94,6 @@ public class TaskList {
     public ArrayList<Task> findTasks(String stringToMatch) {
         ArrayList<Task> tasksFound = new ArrayList<>();
         for (Task task : getTasks()) {
-            System.out.println(task.getTaskName().toLowerCase());
-            System.out.println(stringToMatch.toLowerCase());
             if (task.getTaskName().toLowerCase().contains(stringToMatch.toLowerCase())) {
                 tasksFound.add(task);
             }
