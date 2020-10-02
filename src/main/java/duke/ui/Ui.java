@@ -143,7 +143,7 @@ public class Ui {
      * a saved file was could not be loaded.
      */
     public static void printFileErrorMessage(Exception e) {
-        System.out.print("Could not find saved file.");
+        System.out.println("Could not find saved file.");
     }
 
     /**
